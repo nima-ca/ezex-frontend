@@ -54,25 +54,27 @@ Format:
 
 Example:
 
-feat(dashboard): add user analytics widget
-fix(landing): resolve broken navigation links
-chore(deps): upgrade react to v18
+- feat(dashboard): add user analytics widget
+
+- fix(landing): resolve broken navigation links
+
+- chore(deps): upgrade react to v18
 
 Common Types:
 
-feat: Introduces a new feature
+- feat: Introduces a new feature
 
-fix: Fixes a bug
+- fix: Fixes a bug
 
-docs: Documentation updates
+- docs: Documentation updates
 
-style: Code style changes (formatting, missing semi-colons, etc.)
+- style: Code style changes (formatting, missing semi-colons, etc.)
 
-refactor: Code refactoring without changing functionality
+- refactor: Code refactoring without changing functionality
 
-test: Adding or updating tests
+- test: Adding or updating tests
 
-chore: Miscellaneous changes (dependencies, build process, etc.)
+- chore: Miscellaneous changes (dependencies, build process, etc.)
 
 ## 🔥 Contribution Guidelines
 
