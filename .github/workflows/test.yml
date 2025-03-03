@@ -54,36 +54,11 @@ jobs:
       - name: Install Dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Build Application
-        run: npm run build
-        env:
-          NODE_ENV: test
-
-      - name: Start Application
-        run: pnpm start
-        env:
-          NODE_ENV: test
-        continue-on-error: true # Ensure Cypress runs even if start fails
-
-      - name: Wait for Server to be Ready
-        run: npx wait-on http://localhost:3000 # Adjust for your app's port
-
       - name: Run Cypress Tests
         uses: cypress-io/github-action@v6
         with:
+          with:
+          build: pnpm build
+          start: pnpm start
           wait-on: http://localhost:3000 # Wait for server before running tests
           browser: chrome
-
-      - name: Upload Cypress Screenshots (on failure)
-        if: failure()
-        uses: actions/upload-artifact@v4
-        with:
-          name: cypress-screenshots
-          path: cypress/screenshots
-
-      - name: Upload Cypress Videos (on failure)
-        if: failure()
-        uses: actions/upload-artifact@v4
-        with:
-          name: cypress-videos
-          path: cypress/videos
