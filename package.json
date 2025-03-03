@@ -30,7 +30,6 @@
         "@commitlint/config-conventional": "^19.7.1",
         "@eslint/eslintrc": "^3",
         "@tailwindcss/postcss": "^4",
-        "@tanstack/eslint-plugin-query": "^5.66.1",
         "@testing-library/dom": "^10.4.0",
         "@testing-library/react": "^16.2.0",
         "@types/node": "^20",
