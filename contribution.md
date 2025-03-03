@@ -9,13 +9,13 @@ Fork the repository and clone your fork.
 Install dependencies:
 
 ```bash
-bun install
+pnpm install
 ```
 
 Start the development server:
 
 ```bash
-bun run dev
+pnpm dev
 ```
 
 ## 🚀 Folder Structure
@@ -95,7 +95,7 @@ git checkout -b feat/new-feature
 - Write tests for any new features or bug fixes:
 
 ```bash
-bun test
+pnpm test
 ```
 
 - Ensure that new functionality is covered with appropriate tests.
