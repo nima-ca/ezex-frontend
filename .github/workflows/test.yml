@@ -6,8 +6,8 @@ on:
       - main
 
 jobs:
-  test:
-    name: Run Unit & E2E Tests
+  unit-test:
+    name: Run Unit Tests
     runs-on: ubuntu-latest
 
     steps:
@@ -32,6 +32,41 @@ jobs:
         run: pnpm test:unit:ci
 
       - name: Run E2E Tests
+        uses: cypress-io/github-action@v6
+        with:
+          with:
+          build: pnpm build
+          start: pnpm start
+          wait-on: http://localhost:3000 # Wait for server before running tests
+          browser: chrome
+
+  e2e-test:
+    name: Run E2E Tests
+    runs-on: ubuntu-latest
+    needs: unit-test # Only run if unit tests pass
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10.5.2
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22.14
+          cache: "pnpm"
+
+      - name: Install Dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Install Cypress Binary
+        run: pnpm cypress install
+
+      - name: Run Cypress Tests
         uses: cypress-io/github-action@v6
         with:
           with:
