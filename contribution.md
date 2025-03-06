@@ -99,7 +99,7 @@ git checkout -b feat/new-feature
 - Write tests for any new features or bug fixes:
 
 ```bash
-bun test
+bun run test
 ```
 
 - Ensure that new functionality is covered with appropriate tests.
