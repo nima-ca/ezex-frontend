@@ -51,7 +51,6 @@
         "vite-tsconfig-paths": "^5.1.4",
         "vitest": "^3.0.7"
     },
-    "packageManager": "bun@1.2.0",
     "config": {
         "commitizen": {
             "path": "cz-conventional-changelog"

@@ -14,22 +14,16 @@ jobs:
             - name: Checkout Repository
               uses: actions/checkout@v4
 
-            - name: Install pnpm
-              uses: pnpm/action-setup@v4
+            - name: Setup Bun
+              uses: oven-sh/setup-bun@v2
               with:
-                  version: 10.5.2
-
-            - name: Setup Node.js
-              uses: actions/setup-node@v4
-              with:
-                  node-version: 22.14 # Use the appropriate Node.js version
-                  cache: "pnpm" # Caches node_modules for faster runs
+                  bun-version: latest
 
             - name: Install Dependencies
-              run: pnpm install --frozen-lockfile
+              run: bun install --frozen-lockfile
 
             - name: Run Unit Tests
-              run: pnpm test:ci
+              run: bun run test:ci
 
     e2e-test:
         name: Run E2E Tests
@@ -40,6 +34,9 @@ jobs:
             - name: Checkout Repository
               uses: actions/checkout@v4
 
+            - name: Remove bun.lock file
+              run: rm bun.lock
+
             - name: Install pnpm
               uses: pnpm/action-setup@v4
               with:
@@ -49,10 +46,9 @@ jobs:
               uses: actions/setup-node@v4
               with:
                   node-version: 22.14
-                  cache: "pnpm"
 
             - name: Install Dependencies
-              run: pnpm install --frozen-lockfile
+              run: pnpm install
 
             - name: Install Cypress Binary
               run: pnpm cypress install
