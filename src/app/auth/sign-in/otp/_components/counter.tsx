@@ -28,19 +28,19 @@ const Counter: FC<CounterProps> = ({ onReset }) => {
     const isFinished = count === 0;
 
     return (
-        <div className="mt-9 mb-16 flex min-h-9 w-full items-center justify-center">
-            {isFinished ? (
-                <Button
-                    type="button"
-                    variant="ghost"
-                    onClick={handleResendClick}
-                >
-                    Resend
-                </Button>
-            ) : (
-                <p className="text-gray-400">Resend code in {count}</p>
-            )}
-        </div>
+        <Button
+            type="button"
+            variant="outline"
+            disabled={!isFinished}
+            onClick={handleResendClick}
+            className="mt-4 mb-16 w-full"
+            size="lg"
+        >
+            {isFinished
+                ? "Resend"
+                : `Resend code in 
+                ${count}`}
+        </Button>
     );
 };
 
