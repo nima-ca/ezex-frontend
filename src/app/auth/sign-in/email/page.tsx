@@ -55,7 +55,6 @@ const SigninWithEmailPage: FC = () => {
                 <Link className="text-primary-500" href="#">
                     Privacy Policy
                 </Link>
-                .
             </p>
         </div>
     );
