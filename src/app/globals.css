@@ -9,21 +9,10 @@
     --font-mono: var(--font-roboto-mono);
 }
 
+/* https://oklch.com/ is a tool to convert hex to oklch */
 :root {
-    --color-ocean-green-50: #eefbf4;
-    --color-ocean-green-100: #d5f6e2;
-    --color-ocean-green-200: #aeecc9;
-    --color-ocean-green-300: #7adbac;
-    --color-ocean-green-400: #39b47c;
-    --color-ocean-green-500: #20a96f;
-    --color-ocean-green-600: #138859;
-    --color-ocean-green-700: #0f6d49;
-    --color-ocean-green-800: #0f563c;
-    --color-ocean-green-900: #0d4733;
-    --color-ocean-green-950: #06281d;
-
-    --background: #ffffff;
-    --foreground: #0e0e11;
+    --background: oklch(1 0 0);
+    --foreground: oklch(16.52% 0.0062 285.7); /* hex: #0e0e11 */
     --card: oklch(1 0 0);
     --card-foreground: oklch(0.145 0 0);
     --popover: oklch(1 0 0);
@@ -58,14 +47,14 @@
 }
 
 .dark {
-    --background: #0e0e11;
-    --foreground: #fafafa;
+    --foreground: oklch(1 0 0);
+    --background: oklch(16.52% 0.0062 285.7); /* hex: #0e0e11 */
     --card: oklch(0.145 0 0);
     --card-foreground: oklch(0.985 0 0);
     --popover: oklch(0.145 0 0);
     --popover-foreground: oklch(0.985 0 0);
-    --primary: var(--color-ocean-green-500);
-    --primary-foreground: oklch(0.985 0 0);
+    --primary: oklch(0.985 0 0);
+    --primary-foreground: oklch(0.205 0 0);
     --secondary: oklch(0.269 0 0);
     --secondary-foreground: oklch(0.985 0 0);
     --muted: oklch(0.269 0 0);
@@ -130,20 +119,20 @@
     --color-sidebar-border: var(--sidebar-border);
     --color-sidebar-ring: var(--sidebar-ring);
 
-    --color-primary-50: var(--color-ocean-green-50);
-    --color-primary-100: var(--color-ocean-green-100);
-    --color-primary-200: var(--color-ocean-green-200);
-    --color-primary-300: var(--color-ocean-green-300);
-    --color-primary-400: var(--color-ocean-green-400);
-    --color-primary-500: var(--color-ocean-green-500);
-    --color-primary-600: var(--color-ocean-green-600);
-    --color-primary-700: var(--color-ocean-green-700);
-    --color-primary-800: var(--color-ocean-green-800);
-    --color-primary-900: var(--color-ocean-green-900);
-    --color-primary-950: var(--color-ocean-green-950);
-
     --font-sans: var(--font-inter);
     --font-mono: var(--font-roboto-mono);
+
+    --color-primary-50: oklch(97.65% 0.0165 162.76); /* hex: #eefbf4 */
+    --color-primary-100: oklch(94.4% 0.0435 158.86); /* hex: #d5f6e2 */
+    --color-primary-200: oklch(89.16% 0.0792 159.54); /* hex: #aeecc9 */
+    --color-primary-300: oklch(81.89% 0.1148 161.32); /* hex: #7adbac */
+    --color-primary-400: oklch(68.82% 0.1365 159.39); /* hex: #39b47c */
+    --color-primary-500: oklch(65.14% 0.1417 158.93); /* hex: #20a96f */
+    --color-primary-600: oklch(55.5% 0.1215 159.51); /* hex: #138859 */
+    --color-primary-700: oklch(47.45% 0.1007 160.95); /* hex: #0f6d49 */
+    --color-primary-800: oklch(40.39% 0.0806 163.07); /* hex: #0f563c */
+    --color-primary-900: oklch(35.59% 0.0678 164.97); /* hex: #0d4733 */
+    --color-primary-950: oklch(24.88% 0.0444 167.54); /* hex: #06281d */
 }
 
 @layer base {

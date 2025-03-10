@@ -28,11 +28,13 @@ const buttonVariants = cva(
             },
             color: {
                 white: "bg-white text-black hover:bg-white/90",
+                primary: "bg-primary-500 text-white hover:bg-primary-500/90",
             },
         },
         defaultVariants: {
             variant: "default",
             size: "default",
+            color: "primary",
         },
     },
 );
