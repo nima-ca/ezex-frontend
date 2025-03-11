@@ -46,7 +46,7 @@ const LayoutCarousel: FC = () => {
                         <div className="w-full">
                             <Image
                                 src={carouselImg1}
-                                alt=""
+                                alt="Green Crystal with crypto symbol"
                                 width={713}
                                 height={855}
                                 className="h-full w-full object-cover"
@@ -57,7 +57,7 @@ const LayoutCarousel: FC = () => {
                         <div>
                             <Image
                                 src={carouselImg2}
-                                alt=""
+                                alt="Green wallet"
                                 width={713}
                                 height={855}
                                 className="h-full w-full object-cover"
@@ -68,7 +68,7 @@ const LayoutCarousel: FC = () => {
                         <div>
                             <Image
                                 src={carouselImg3}
-                                alt=""
+                                alt="Green chart"
                                 width={713}
                                 height={855}
                                 className="h-full w-full object-cover"

@@ -49,6 +49,7 @@ const OTPForm: FC = () => {
                 </InputOTPGroup>
             </InputOTP>
 
+            {/* TODO: Get the email from email page */}
             <Link href="mailto:test@gmail.com" className="w-full">
                 <Button
                     size="lg"
