@@ -40,7 +40,7 @@ jobs:
               id: meta
               uses: docker/metadata-action@v4
               with:
-                  images: ezexci/ezex-frontend
+                  images: ezexio/ezex-frontend
 
             - name: Build and push
               uses: docker/build-push-action@v5
