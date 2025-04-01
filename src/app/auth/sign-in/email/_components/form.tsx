@@ -26,6 +26,7 @@ import {
     DeliveryMethod,
     sendConfirmationCodeAPI,
 } from "@/lib/graphql/mutations/send-confirmation-code";
+import { PATHS } from "@/constants/paths.constant";
 
 const EmailForm = () => {
     const router = useRouter();
@@ -46,17 +47,27 @@ const EmailForm = () => {
         checkUserExistsMutation.mutate(
             { email: values.email },
             {
-                onSuccess(data, varialbes) {
+                onSuccess(data, variables) {
                     const emailExits = data.length !== 0;
                     if (emailExits) {
-                        router.push("/auth/sign-in/password");
+                        router.push(PATHS.SigninPasswordPage);
                         return;
                     }
 
-                    sendOTPMutation.mutate({
-                        method: DeliveryMethod.EMAIL,
-                        recipient: varialbes.email,
-                    });
+                    sendOTPMutation.mutate(
+                        {
+                            method: DeliveryMethod.EMAIL,
+                            recipient: variables.email,
+                        },
+                        {
+                            onSuccess() {
+                                router.push(
+                                    PATHS.SignupOTPPage +
+                                        `?email=${variables.email}`,
+                                );
+                            },
+                        },
+                    );
                 },
             },
         );
@@ -86,10 +97,11 @@ const EmailForm = () => {
                 />
 
                 <Button
+                    size="lg"
                     type="submit"
                     color="primary"
-                    size="lg"
                     className="mt-4 lg:mt-8"
+                    disabled={isPending}
                 >
                     Continue
                     {isPending && <Loader className="animate-spin" />}

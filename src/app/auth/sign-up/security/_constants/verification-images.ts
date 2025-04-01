@@ -1,3 +1,10 @@
+import { PasswordFormValues } from "../_schemas/password-form.schema";
+
+export const PASSWORD_FORM_INITIAL_VALUES: Partial<PasswordFormValues> = {
+    password: "",
+    confirmPassword: "",
+};
+
 export type VerificationImage = {
     id: number;
     name: string;

@@ -1,153 +1,164 @@
 "use client";
 
-import SecurityImageGrid from "@/app/auth/security/_components/security-image-grid";
+import SecurityImageGrid from "@/app/auth/sign-up/security/_components/security-image-grid";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import {
+    Form,
+    FormControl,
+    FormDescription,
+    FormField,
+    FormItem,
+    FormLabel,
+    FormMessage,
+} from "@/components/ui/form";
+import PasswordInput from "@/components/ui/password-input";
+import { PATHS } from "@/constants/paths.constant";
+import { useSignupStore } from "@/stores/signup/signup.store";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { z } from "zod";
-
-// Constants for validation
-const MEMORABLE_WORD_MIN_LENGTH = 4;
-const MEMORABLE_WORD_MAX_LENGTH = 50;
-
-// Define the form schema with Zod
-const securityFormSchema = z.object({
-    imageId: z.number({
-        required_error: "Please select a security image.",
-        invalid_type_error: "Please select a security image.",
-    }),
-    memorableWord: z
-        .string()
-        .min(
-            MEMORABLE_WORD_MIN_LENGTH,
-            `Memorable word must be at least ${MEMORABLE_WORD_MIN_LENGTH} characters long.`,
-        )
-        .max(
-            MEMORABLE_WORD_MAX_LENGTH,
-            `Memorable word cannot exceed ${MEMORABLE_WORD_MAX_LENGTH} characters.`,
-        )
-        .trim(),
-});
-
-// Type for the form values
-type SecurityFormValues = z.infer<typeof securityFormSchema>;
+import { PASSWORD_FORM_INITIAL_VALUES } from "../_constants/verification-images";
+import {
+    passwordFormSchema,
+    PasswordFormValues,
+} from "../_schemas/password-form.schema";
+import { Loader } from "lucide-react";
 
 const SecurityVerificationForm = () => {
-    const [isSubmitting, setIsSubmitting] = useState(false);
     const router = useRouter();
+    const verifiedEmail = useSignupStore(state => state.verifiedEmail);
 
-    // Initialize React Hook Form with Zod validation
-    const {
-        register,
-        handleSubmit,
-        setValue,
-        watch,
-        formState: { errors },
-        clearErrors,
-        resetField,
-    } = useForm<SecurityFormValues>({
-        resolver: zodResolver(securityFormSchema),
-        defaultValues: {
-            memorableWord: "",
-        },
+    useEffect(() => {
+        if (!verifiedEmail) {
+            // router.replace(PATHS.SigninEmailPage);
+        }
+    }, [verifiedEmail]);
+
+    const createUserMutation = useMutation({
+        mutationFn: async () => {},
+    });
+
+    const setSecurityPictureMutation = useMutation({
+        mutationFn: async () => {},
+    });
+
+    const form = useForm<PasswordFormValues>({
+        resolver: zodResolver(passwordFormSchema),
+        defaultValues: PASSWORD_FORM_INITIAL_VALUES,
+    });
+
+    const onSubmit = form.handleSubmit(() => {
+        createUserMutation.mutate();
+
+        // TODO: add when api is ready
+        setSecurityPictureMutation.mutate();
     });
 
     // Watch the imageId value to use in the UI
-    const selectedImage = watch("imageId");
+    const selectedImage = form.watch("imageId");
 
     const handleImageSelect = (imageId: number) => {
         // If the same image is clicked again, deselect it
         if (selectedImage === imageId) {
-            resetField("imageId");
+            form.resetField("imageId");
         } else {
-            setValue("imageId", imageId, { shouldValidate: true });
-            clearErrors("imageId");
+            form.setValue("imageId", imageId, { shouldValidate: true });
+            form.clearErrors("imageId");
         }
     };
 
-    const onSubmit = async (data: SecurityFormValues) => {
-        setIsSubmitting(true);
-        try {
-            // TODO: Replace with actual secure API call
-            await new Promise(resolve => setTimeout(resolve, 1000));
-            console.log("Saving verification", {
-                imageId: data.imageId,
-                wordLength: data.memorableWord.length,
-            });
-        } catch (error) {
-            console.error("Verification failed:", error);
-            // You can set a form-level error here if needed
-        } finally {
-            setIsSubmitting(false);
-        }
-    };
+    const isPending =
+        createUserMutation.isPending || setSecurityPictureMutation.isPending;
 
     return (
-        <form
-            onSubmit={handleSubmit(onSubmit)}
-            className="flex w-full flex-col"
-            aria-label="Security Verification Form"
-        >
-            <p className="mt-5 mb-4 text-sm text-gray-300 sm:text-base">
-                To enhance your account security against phishing, please select
-                one image from the 16 displayed.
-            </p>
-
-            <SecurityImageGrid
-                selectedImage={selectedImage}
-                onImageSelect={handleImageSelect}
-            />
-
-            {errors.imageId && (
-                <p className="mb-4 text-sm text-red-500" role="alert">
-                    {errors.imageId.message}
+        <Form {...form}>
+            <form
+                onSubmit={onSubmit}
+                className="flex w-full flex-col"
+                aria-label="Security Verification Form"
+            >
+                <p className="mt-5 mb-4 text-sm text-gray-300 sm:text-base">
+                    To enhance your account security against phishing, please
+                    select one image from the 16 displayed.
                 </p>
-            )}
 
-            <label htmlFor="memorableWord" className="mb-4">
-                Choose any memorable word of your choice
-            </label>
+                <SecurityImageGrid
+                    selectedImage={selectedImage}
+                    onImageSelect={handleImageSelect}
+                />
 
-            <Input
-                id="memorableWord"
-                type="text"
-                placeholder="For example, you might use your pet's name."
-                className="w-full text-white placeholder-gray-500"
-                aria-required="true"
-                maxLength={MEMORABLE_WORD_MAX_LENGTH}
-                {...register("memorableWord")}
-            />
+                {form.formState.errors.imageId && (
+                    <p className="mb-4 text-sm text-red-500" role="alert">
+                        {form.formState.errors.imageId.message}
+                    </p>
+                )}
 
-            {errors.memorableWord && (
-                <p className="mt-2 text-sm text-red-500" role="alert">
-                    {errors.memorableWord.message}
-                </p>
-            )}
+                <div className="flex flex-col gap-2">
+                    <FormField
+                        control={form.control}
+                        name="password"
+                        render={({ field }) => (
+                            <FormItem>
+                                <FormLabel className="mb-4">
+                                    Choose a strong password.
+                                </FormLabel>
+                                <FormControl>
+                                    <PasswordInput
+                                        {...field}
+                                        type="password"
+                                        placeholder="Password"
+                                    />
+                                </FormControl>
+                                <FormDescription />
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
 
-            <div className="flex flex-col space-y-4">
-                <Button
-                    size="lg"
-                    type="submit"
-                    className="bg-primary-500 hover:bg-primary-600 mt-6 w-full sm:mt-8"
-                    disabled={isSubmitting}
-                    color="primary"
-                >
-                    {isSubmitting ? "Processing..." : "Continue"}
-                </Button>
-                <Button
-                    type="button"
-                    variant="link"
-                    className="text-primary-500"
-                    onClick={() => router.push("/auth/sign-in/email")}
-                    disabled={isSubmitting}
-                >
-                    Go Back
-                </Button>
-            </div>
-        </form>
+                    <FormField
+                        control={form.control}
+                        name="confirmPassword"
+                        render={({ field }) => (
+                            <FormItem>
+                                <FormControl>
+                                    <PasswordInput
+                                        {...field}
+                                        type="password"
+                                        placeholder="Confirm Password"
+                                    />
+                                </FormControl>
+                                <FormDescription />
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
+                </div>
+
+                <div className="flex flex-col space-y-4">
+                    <Button
+                        size="lg"
+                        type="submit"
+                        className="bg-primary-500 hover:bg-primary-600 mt-6 w-full sm:mt-8"
+                        disabled={isPending}
+                        color="primary"
+                    >
+                        Continue
+                        {isPending && <Loader className="animate-spin" />}
+                    </Button>
+                    <Button
+                        type="button"
+                        variant="link"
+                        className="text-primary-500"
+                        onClick={() => router.push(PATHS.SigninEmailPage)}
+                        disabled={isPending}
+                    >
+                        Go Back
+                    </Button>
+                </div>
+            </form>
+        </Form>
     );
 };
 

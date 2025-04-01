@@ -2,16 +2,22 @@
 
 import { Button } from "@/components/ui/button";
 import { useCountdown } from "@/hooks/useCountdown/useCountdown";
+import {
+    DeliveryMethod,
+    sendConfirmationCodeAPI,
+} from "@/lib/graphql/mutations/send-confirmation-code";
 import { seconds } from "@/utils/timeUtils/timeUtils";
+import { useMutation } from "@tanstack/react-query";
+import { Loader } from "lucide-react";
 import { FC, useEffect } from "react";
 
 export interface CounterProps {
-    onReset: () => void;
+    recipient: string;
 }
 
-const Counter: FC<CounterProps> = ({ onReset }) => {
+const Counter: FC<CounterProps> = ({ recipient }) => {
     const [count, { startCountdown, resetCountdown }] = useCountdown({
-        countStart: 60, // 60 seconds
+        countStart: 2, // 60 seconds
         intervalMs: seconds(1),
     });
 
@@ -19,10 +25,23 @@ const Counter: FC<CounterProps> = ({ onReset }) => {
         startCountdown();
     }, []);
 
+    const sendOTPMutation = useMutation({
+        mutationFn: sendConfirmationCodeAPI,
+    });
+
     const handleResendClick = () => {
-        resetCountdown();
-        startCountdown();
-        onReset();
+        sendOTPMutation.mutate(
+            {
+                method: DeliveryMethod.EMAIL,
+                recipient,
+            },
+            {
+                onSuccess() {
+                    resetCountdown();
+                    startCountdown();
+                },
+            },
+        );
     };
 
     const isFinished = count === 0;
@@ -36,10 +55,9 @@ const Counter: FC<CounterProps> = ({ onReset }) => {
             className="mt-4 mb-16 w-full"
             size="lg"
         >
-            {isFinished
-                ? "Resend"
-                : `Resend code in 
-                ${count}`}
+            {isFinished && <span>Resend</span>}
+            {!isFinished && <span>Resend code in {count}</span>}
+            {sendOTPMutation.isPending && <Loader className="animate-spin" />}
         </Button>
     );
 };

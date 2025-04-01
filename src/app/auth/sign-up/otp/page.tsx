@@ -2,6 +2,7 @@ import smallScreenImg from "@images/auth/small-screen-otp.png";
 import Image from "next/image";
 import { FC } from "react";
 import OTPForm from "./_components/form";
+import { Suspense } from "react";
 
 const SigninOTPPage: FC = () => {
     return (
@@ -19,13 +20,9 @@ const SigninOTPPage: FC = () => {
                 priority
             />
 
-            {/* TODO: Get the email from email page */}
-            <p className="mt-5 mb-8 text-gray-300">
-                Verify your email mohyedinsa@gmail.com. This helps us keep your
-                account secure by verifying that it’s really you.
-            </p>
-
-            <OTPForm />
+            <Suspense>
+                <OTPForm />
+            </Suspense>
         </div>
     );
 };
