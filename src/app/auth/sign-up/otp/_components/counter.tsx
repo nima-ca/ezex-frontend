@@ -10,6 +10,7 @@ import { seconds } from "@/utils/timeUtils/timeUtils";
 import { useMutation } from "@tanstack/react-query";
 import { Loader } from "lucide-react";
 import { FC, useEffect } from "react";
+import { toast } from "sonner";
 
 export interface CounterProps {
     recipient: string;
@@ -17,7 +18,7 @@ export interface CounterProps {
 
 const Counter: FC<CounterProps> = ({ recipient }) => {
     const [count, { startCountdown, resetCountdown }] = useCountdown({
-        countStart: 2, // 60 seconds
+        countStart: 60, // 60 seconds TODO: ask for rate limit time and replace here
         intervalMs: seconds(1),
     });
 
@@ -37,6 +38,7 @@ const Counter: FC<CounterProps> = ({ recipient }) => {
             },
             {
                 onSuccess() {
+                    toast.success("OTP sent successfully");
                     resetCountdown();
                     startCountdown();
                 },

@@ -7,7 +7,10 @@ export const passwordFormSchema = z
             invalid_type_error: "Please select a security image.",
         }),
         password: z
-            .string()
+            .string({
+                required_error: "Please enter password",
+                invalid_type_error: "Please enter password",
+            })
             .min(8, { message: "Password must be at least 8 characters long." })
             .regex(/[A-Z]/, {
                 message: "Password must contain at least one uppercase letter.",
@@ -18,12 +21,13 @@ export const passwordFormSchema = z
             .regex(/[0-9]/, {
                 message: "Password must contain at least one number.",
             })
-            .regex(/[^A-Za-z0-9]/, {
+            .regex(/[!@#$%^&*]/, {
                 message:
-                    "Password must contain at least one special character.",
+                    "Password must contain at least one special character: !@#$%^&*",
             }),
-        confirmPassword: z.string().min(8, {
-            message: "Confirm Password must be at least 8 characters long.",
+        confirmPassword: z.string({
+            required_error: "Please enter confirm password",
+            invalid_type_error: "Please enter confirm password",
         }),
     })
     .refine(

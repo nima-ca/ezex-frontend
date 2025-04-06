@@ -6,17 +6,17 @@ import {
     InputOTPSeparator,
     InputOTPSlot,
 } from "@/components/ui/input-otp";
-import { REGEXP_ONLY_DIGITS } from "input-otp";
-import Link from "next/link";
-import { FC } from "react";
-import Counter from "./counter";
-import { useRouter, useSearchParams } from "next/navigation";
-import { useEffect } from "react";
 import { PATHS } from "@/constants/paths.constant";
-import { toSafeString } from "@/utils/stringUtils/stringUtils";
-import { useMutation } from "@tanstack/react-query";
 import { verifyConfirmationCodeAPI } from "@/lib/graphql/mutations/verify-confirmation-code";
 import { useSignupStore } from "@/stores/signup/signup.store";
+import { toSafeString } from "@/utils/stringUtils/stringUtils";
+import { useMutation } from "@tanstack/react-query";
+import { REGEXP_ONLY_DIGITS } from "input-otp";
+import Link from "next/link";
+import { useRouter, useSearchParams } from "next/navigation";
+import { FC, useEffect } from "react";
+import Counter from "./counter";
+import { toast } from "sonner";
 
 const OTPForm: FC = () => {
     const router = useRouter();
@@ -35,6 +35,7 @@ const OTPForm: FC = () => {
     });
 
     const onComplete = (code: string) => {
+        console.log(code);
         verifyOTPMutation.mutate(
             {
                 code,
@@ -42,8 +43,9 @@ const OTPForm: FC = () => {
             },
             {
                 onSuccess(_, variables) {
-                    router.push(PATHS.SignupSecurityPage);
+                    toast.success("Your email verified successfully");
                     setVerifiedEmail(variables.recipient);
+                    router.push(PATHS.SignupSecurityPage);
                 },
             },
         );

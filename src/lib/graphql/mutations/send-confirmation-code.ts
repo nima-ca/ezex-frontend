@@ -1,5 +1,5 @@
 import { gql } from "graphql-request";
-import gqlClient from "../client";
+import { gqlRequest, GQLRequestOptions } from "../client";
 
 export const SEND_CONFIRMATION_CODE = gql`
     mutation SendConfirmationCode($input: SendConfirmationCodeInput!) {
@@ -13,7 +13,7 @@ export enum DeliveryMethod {
     EMAIL = "EMAIL",
 }
 
-export interface SendConfirmationCodeAPIBody {
+export interface SendConfirmationCodeAPIBody extends GQLRequestOptions {
     method: DeliveryMethod;
     recipient: string;
 }
@@ -21,5 +21,7 @@ export interface SendConfirmationCodeAPIBody {
 export const sendConfirmationCodeAPI = async (
     body: SendConfirmationCodeAPIBody,
 ) => {
-    return gqlClient.request(SEND_CONFIRMATION_CODE, { input: body });
+    return await gqlRequest(SEND_CONFIRMATION_CODE, {
+        input: body,
+    });
 };

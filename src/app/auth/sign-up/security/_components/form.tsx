@@ -26,6 +26,8 @@ import {
 } from "../_schemas/password-form.schema";
 import { Loader } from "lucide-react";
 import { createUserAPI } from "@/lib/axios/firebase/create-user-with-email-password";
+import { toast } from "sonner";
+import { FirebaseError } from "firebase/app";
 
 const SecurityVerificationForm = () => {
     const router = useRouter();
@@ -61,9 +63,35 @@ const SecurityVerificationForm = () => {
             {
                 onSuccess() {
                     // TODO: add when api is ready
-                    setSecurityPictureMutation.mutate();
+                    // setSecurityPictureMutation.mutate();
 
-                    // TODO: login user here
+                    // TODO: login user here and redirect user to dashboard
+                    toast.success("welcome to ezeX!");
+                    router.push(PATHS.Home);
+                },
+                onError(error) {
+                    let message = "An unknown error occurred";
+                    if (error instanceof FirebaseError) {
+                        switch (error.code) {
+                            case "auth/email-already-in-use":
+                                message = "This email is already in use.";
+                                break;
+                            case "auth/invalid-email":
+                                message = "The email address is not valid.";
+                                break;
+                            case "auth/operation-not-allowed":
+                                message =
+                                    "Email/password accounts are not enabled.";
+                                break;
+                            case "auth/weak-password":
+                                message = "The password is too weak.";
+                                break;
+                            default:
+                                message = error.message;
+                        }
+                    }
+
+                    toast.error(message);
                 },
             },
         );

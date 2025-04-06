@@ -27,6 +27,7 @@ import {
     sendConfirmationCodeAPI,
 } from "@/lib/graphql/mutations/send-confirmation-code";
 import { PATHS } from "@/constants/paths.constant";
+import { toast } from "sonner";
 
 const EmailForm = () => {
     const router = useRouter();
@@ -61,6 +62,7 @@ const EmailForm = () => {
                         },
                         {
                             onSuccess() {
+                                toast.success("OTP sent successfully");
                                 router.push(
                                     PATHS.SignupOTPPage +
                                         `?email=${variables.email}`,
@@ -68,6 +70,9 @@ const EmailForm = () => {
                             },
                         },
                     );
+                },
+                onError() {
+                    toast.error("Failed to check email address");
                 },
             },
         );

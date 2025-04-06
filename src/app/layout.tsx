@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { Inter, Roboto_Mono } from "next/font/google";
 import { FC, PropsWithChildren } from "react";
 import "./globals.css";
+import { Toaster } from "sonner";
 
 const inter = Inter({
     variable: "--font-inter",
@@ -27,6 +28,9 @@ const RootLayout: FC<PropsWithChildren> = ({ children }) => {
                     className={`${inter.variable} ${robotoMono.variable} min-h-svh max-w-screen font-sans antialiased`}
                 >
                     {children}
+
+                    {/* [DOC]: Toaster should be placed in body tag not HTML */}
+                    <Toaster richColors position="bottom-right" />
                 </body>
             </Providers>
         </html>

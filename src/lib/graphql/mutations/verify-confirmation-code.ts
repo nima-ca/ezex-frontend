@@ -1,5 +1,5 @@
 import { gql } from "graphql-request";
-import gqlClient from "../client";
+import { gqlRequest, GQLRequestOptions } from "../client";
 
 export const VERIFY_CONFIRMATION_CODE = gql`
     mutation VerifyConfirmationCode($input: VerifyConfirmationCodeInput!) {
@@ -9,7 +9,7 @@ export const VERIFY_CONFIRMATION_CODE = gql`
     }
 `;
 
-export interface VerifyConfirmationCodeAPIBody {
+export interface VerifyConfirmationCodeAPIBody extends GQLRequestOptions {
     code: string;
     recipient: string;
 }
@@ -17,5 +17,5 @@ export interface VerifyConfirmationCodeAPIBody {
 export const verifyConfirmationCodeAPI = async (
     body: VerifyConfirmationCodeAPIBody,
 ) => {
-    return gqlClient.request(VERIFY_CONFIRMATION_CODE, { input: body });
+    return await gqlRequest(VERIFY_CONFIRMATION_CODE, { input: body });
 };
