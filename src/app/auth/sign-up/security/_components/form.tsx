@@ -25,6 +25,7 @@ import {
     PasswordFormValues,
 } from "../_schemas/password-form.schema";
 import { Loader } from "lucide-react";
+import { createUserAPI } from "@/lib/axios/firebase/create-user-with-email-password";
 
 const SecurityVerificationForm = () => {
     const router = useRouter();
@@ -32,16 +33,16 @@ const SecurityVerificationForm = () => {
 
     useEffect(() => {
         if (!verifiedEmail) {
-            // router.replace(PATHS.SigninEmailPage);
+            router.replace(PATHS.SigninEmailPage);
         }
     }, [verifiedEmail]);
 
     const createUserMutation = useMutation({
-        mutationFn: async () => {},
+        mutationFn: createUserAPI,
     });
 
     const setSecurityPictureMutation = useMutation({
-        mutationFn: async () => {},
+        mutationFn: async () => {}, // TODO: add when ready
     });
 
     const form = useForm<PasswordFormValues>({
@@ -49,11 +50,23 @@ const SecurityVerificationForm = () => {
         defaultValues: PASSWORD_FORM_INITIAL_VALUES,
     });
 
-    const onSubmit = form.handleSubmit(() => {
-        createUserMutation.mutate();
+    const onSubmit = form.handleSubmit(values => {
+        if (!verifiedEmail) return;
 
-        // TODO: add when api is ready
-        setSecurityPictureMutation.mutate();
+        createUserMutation.mutate(
+            {
+                email: verifiedEmail as string,
+                password: values.password,
+            },
+            {
+                onSuccess() {
+                    // TODO: add when api is ready
+                    setSecurityPictureMutation.mutate();
+
+                    // TODO: login user here
+                },
+            },
+        );
     });
 
     // Watch the imageId value to use in the UI
