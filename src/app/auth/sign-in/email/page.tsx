@@ -1,13 +1,8 @@
-import AppleLogoIcon from "@/components/icons/appleLogo";
-import FacebookLogoIcon from "@/components/icons/facebookLogo";
-import GoogleLogoIcon from "@/components/icons/googleLogo";
-import XLogoIcon from "@/components/icons/xLogo";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import smallScreenImg from "@images/auth/small-screen-email.png";
 import Image from "next/image";
 import Link from "next/link";
 import { FC } from "react";
+import EmailForm from "./_components/form";
 
 const SigninWithEmailPage: FC = () => {
     return (
@@ -17,7 +12,7 @@ const SigninWithEmailPage: FC = () => {
                 <span className="text-primary-500 font-bold">ezeX</span>
             </p>
 
-            <h1 className="text-3xl font-bold">
+            <h1 className="mb-0 text-3xl font-bold lg:mb-10">
                 Sign in or Create your account
             </h1>
 
@@ -31,19 +26,10 @@ const SigninWithEmailPage: FC = () => {
             />
 
             <div className="flex flex-col-reverse lg:flex-col">
-                <div className="flex flex-col">
-                    <label htmlFor="email" className="mt-9 mb-4">
-                        Enter your username or email address
-                    </label>
+                <EmailForm />
 
-                    <Input id="email" placeholder="Username or email address" />
-
-                    <Button color="primary" size="lg" className="mt-4 lg:mt-8">
-                        Continue
-                    </Button>
-                </div>
-
-                <div className="flex flex-col-reverse lg:flex-col">
+                {/* TODO: enable when api is ready */}
+                {/* <div className="flex flex-col-reverse lg:flex-col">
                     <span className="my-4 self-center text-gray-500 lg:my-8">
                         OR
                     </span>
@@ -69,7 +55,7 @@ const SigninWithEmailPage: FC = () => {
                             </Button>
                         </div>
                     </div>
-                </div>
+                </div> */}
             </div>
 
             <p className="mt-8 text-sm">

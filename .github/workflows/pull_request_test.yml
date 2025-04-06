@@ -13,10 +13,19 @@ jobs:
   unit-test:
     name: Run Unit Tests
     runs-on: ubuntu-latest
+    env:
+      ENV_VARIABLES_FILE_TEST: ${{ vars.ENV_VARIABLES_FILE_TEST }}
 
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
+
+      - name: Add Test Environment Variables
+        run: |
+          touch .env.production
+          echo "🧪 Using TEST environment"
+          printf "%s" "$ENV_VARIABLES_FILE_TEST" > .env.production
+          echo .env.production
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -34,10 +43,19 @@ jobs:
     name: Run E2E Tests
     runs-on: ubuntu-latest
     needs: unit-test # Only run if unit tests pass
+    env:
+      ENV_VARIABLES_FILE_TEST: ${{ vars.ENV_VARIABLES_FILE_TEST }}
 
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
+
+      - name: Add Test Environment Variables
+        run: |
+          touch .env.production
+          echo "🧪 Using TEST environment"
+          printf "%s" "$ENV_VARIABLES_FILE_TEST" > .env.production
+          echo .env.production
 
       - name: Setup Node.js
         uses: actions/setup-node@v4

@@ -3,7 +3,7 @@
 import {
     VERIFICATION_IMAGES,
     VerificationImage,
-} from "@/app/auth/security/_constants/verification-images";
+} from "@/app/auth/sign-up/security/_constants/verification-images";
 import { cn } from "@/utils/cn";
 import Image from "next/image";
 import { FC } from "react";
@@ -42,6 +42,7 @@ const SecurityImageGrid: FC<SecurityImageGridProps> = ({
                             fill
                             sizes="(max-width: 768px) 25vw, (max-width: 1200px) 20vw, 15vw"
                             className="object-cover transition-transform group-hover:scale-105"
+                            priority
                         />
                         {isSelected && (
                             <div
