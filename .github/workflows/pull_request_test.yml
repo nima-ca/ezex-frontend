@@ -10,7 +10,7 @@ on:
       - main
 
 env:
-  ENV_VARIABLES_FILE_DEVELOPMENT: ${{ vars.ENV_VARIABLES_FILE_DEVELOPMENT }}
+  ENV_VARIABLES_FILE_TEST: ${{ vars.ENV_VARIABLES_FILE_TEST }}
 
 jobs:
   unit-test:
@@ -24,8 +24,8 @@ jobs:
       - name: Add Test Environment Variables
         run: |
           touch .env.production
-          echo "🧪 Using DEVELOPMENT environment"
-          echo $ENV_VARIABLES_FILE_DEVELOPMENT >> .env.production
+          echo "🧪 Using TEST environment"
+          echo $ENV_VARIABLES_FILE_TEST >> .env.production
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -51,8 +51,8 @@ jobs:
       - name: Add Test Environment Variables
         run: |
           touch .env.production
-          echo "🧪 Using DEVELOPMENT environment"
-          echo $ENV_VARIABLES_FILE_DEVELOPMENT >> .env.production
+          echo "🧪 Using TEST environment"
+          echo $ENV_VARIABLES_FILE_TEST >> .env.production
 
       - name: Setup Node.js
         uses: actions/setup-node@v4

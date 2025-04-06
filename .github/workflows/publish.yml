@@ -8,7 +8,7 @@ on:
       - main
 
 env:
-  ENV_VARIABLES_FILE_STAGING: ${{ vars.ENV_VARIABLES_FILE_DEVELOPMENT }}
+  ENV_VARIABLES_FILE_DEVELOPMENT: ${{ vars.ENV_VARIABLES_FILE_DEVELOPMENT }}
   ENV_VARIABLES_FILE_PRODUCTION: ${{ vars.ENV_VARIABLES_FILE_PRODUCTION }}
 
 jobs:
@@ -26,8 +26,8 @@ jobs:
             echo "🔥 Using production environment"
             echo $ENV_VARIABLES_FILE_PRODUCTION >> .env.production
           else
-            echo "🧪 Using staging environment"
-            echo $ENV_VARIABLES_FILE_STAGING >> .env.production
+            echo "🧪 Using development environment"
+            echo $ENV_VARIABLES_FILE_DEVELOPMENT >> .env.production
           fi
 
       - name: Log in to Docker Hub
