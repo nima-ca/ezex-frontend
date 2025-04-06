@@ -25,6 +25,7 @@ jobs:
           touch .env.production
           echo "🧪 Using TEST environment"
           printf "%s" "$ENV_VARIABLES_FILE_TEST" > .env.production
+          echo .env.production
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -54,6 +55,7 @@ jobs:
           touch .env.production
           echo "🧪 Using TEST environment"
           printf "%s" "$ENV_VARIABLES_FILE_TEST" > .env.production
+          echo .env.production
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
