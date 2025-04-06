@@ -9,6 +9,9 @@ on:
     branches:
       - main
 
+env:
+  ENV_VARIABLES_FILE_STAGING: ${{ vars.ENV_VARIABLES_FILE_DEVELOPMENT }}
+
 jobs:
   unit-test:
     name: Run Unit Tests
@@ -17,6 +20,12 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
+
+      - name: Add Test Environment Variables
+        run: |
+          touch .env.production
+          echo "🧪 Using staging environment"
+          echo $ENV_VARIABLES_FILE_STAGING >> .env.production
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -38,6 +47,12 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
+
+      - name: Add Test Environment Variables
+        run: |
+          touch .env.production
+          echo "🧪 Using staging environment"
+          echo $ENV_VARIABLES_FILE_STAGING >> .env.production
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
