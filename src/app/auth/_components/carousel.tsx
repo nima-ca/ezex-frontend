@@ -78,9 +78,11 @@ const LayoutCarousel: FC = () => {
                 </CarouselContent>
             </Carousel>
 
-            <Button className="border-primary-950 absolute top-7 right-7 bg-black text-white hover:bg-black/90">
+            <Button
+                iconRight={<ArrowRight />}
+                className="border-primary-950 absolute top-7 right-7 bg-black text-white hover:bg-black/90"
+            >
                 Back to website
-                <ArrowRight />
             </Button>
 
             <Pagination
