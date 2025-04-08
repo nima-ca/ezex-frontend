@@ -2,6 +2,7 @@ import * as React from "react";
 import { Slot } from "@radix-ui/react-slot";
 import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/utils/cn";
+import { Loader } from "lucide-react";
 
 /**
  * Utility class generator for the Button component using `class-variance-authority`.
@@ -138,7 +139,7 @@ function Button({
                 <span className={cn(isLoading && "invisible")}>{IconLeft}</span>
             )}
             <span className={cn(isLoading && "invisible")}>{children}</span>
-            {isLoading && <span className="absolute">Loading ...</span>}
+            {isLoading && <Loader className="absolute animate-spin" />}
             {IconRight && (
                 <span className={cn(isLoading && "invisible")}>
                     {IconRight}
