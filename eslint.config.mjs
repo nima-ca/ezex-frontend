@@ -23,6 +23,7 @@ const eslintConfig = [
             "no-shadow": "error",
             "require-atomic-updates": "error",
             "prefer-template": "error",
+            "no-nested-ternary": "error",
             "padding-line-between-statements": [
                 "error",
                 { blankLine: "always", prev: "*", next: "return" },

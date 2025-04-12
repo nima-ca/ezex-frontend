@@ -65,8 +65,7 @@ const EmailForm = () => {
                             onSuccess() {
                                 toast.success("OTP sent successfully");
                                 router.push(
-                                    PATHS.SignupOTPPage +
-                                        `?email=${variables.email}`,
+                                    `${PATHS.SignupOTPPage}?email=${variables.email}`,
                                 );
                             },
                         },
