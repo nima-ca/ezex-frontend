@@ -21,6 +21,8 @@ const eslintConfig = [
             "no-negated-condition": "error",
             "no-else-return": "error",
             "no-shadow": "error",
+            "require-atomic-updates": "error",
+            "prefer-template": "error",
             "padding-line-between-statements": [
                 "error",
                 { blankLine: "always", prev: "*", next: "return" },

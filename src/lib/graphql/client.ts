@@ -2,8 +2,7 @@ import { toSafeString } from "@/utils/stringUtils/stringUtils";
 import { GraphQLClient, RequestDocument, ClientError } from "graphql-request";
 import { toast } from "sonner";
 
-const GQL_BASE_URL =
-    toSafeString(process.env.NEXT_PUBLIC_GATEWAY_API_BASE_URL) + "/query";
+const GQL_BASE_URL = `${toSafeString(process.env.NEXT_PUBLIC_GATEWAY_API_BASE_URL)}${"/query"}`;
 const gqlClient = new GraphQLClient(GQL_BASE_URL);
 
 export interface GQLRequestOptions {
