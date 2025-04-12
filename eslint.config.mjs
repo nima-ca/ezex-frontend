@@ -15,6 +15,11 @@ const eslintConfig = [
         "next/typescript",
         "plugin:storybook/recommended",
     ),
+    {
+        rules: {
+            "no-implicit-coercion": "error",
+        },
+    },
 ];
 
 export default eslintConfig;
