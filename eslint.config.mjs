@@ -19,6 +19,7 @@ const eslintConfig = [
         rules: {
             "no-implicit-coercion": "error",
             "no-negated-condition": "error",
+            "no-else-return": "error",
         },
     },
 ];
