@@ -35,6 +35,11 @@ const eslintConfig = [
                     next: ["const", "let", "var"],
                 },
             ],
+            "lines-between-class-members": [
+                "error",
+                "always",
+                { exceptAfterSingleLine: true },
+            ],
         },
     },
 ];
