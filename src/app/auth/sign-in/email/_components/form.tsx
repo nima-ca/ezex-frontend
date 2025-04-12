@@ -49,8 +49,10 @@ const EmailForm = () => {
             {
                 onSuccess(data, variables) {
                     const emailExits = data.length !== 0;
+
                     if (emailExits) {
                         router.push(PATHS.SigninPasswordPage);
+
                         return;
                     }
 

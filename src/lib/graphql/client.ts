@@ -23,6 +23,7 @@ export async function gqlRequest<T = unknown>(
 
         if (error instanceof ClientError) {
             const gqlError = error.response.errors;
+
             if (gqlError && gqlError.length !== 0) {
                 gqlError.forEach(err => {
                     toast.error(err.message);
