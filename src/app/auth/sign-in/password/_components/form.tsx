@@ -26,6 +26,9 @@ import { useRouter } from "next/navigation";
 import { PATHS } from "@/constants/paths.constant";
 import { VERIFICATION_IMAGES } from "@/app/auth/sign-up/security/_constants/verification-images";
 import Image from "next/image";
+import { signinWithEmailAndPasswordAPI } from "@/lib/axios/firebase/sign-in-with-email-and-password";
+import { FirebaseError } from "firebase/app";
+import { toast } from "sonner";
 
 const PasswordForm = () => {
     const router = useRouter();
@@ -51,11 +54,41 @@ const PasswordForm = () => {
     });
 
     const passwordLoginMutation = useMutation({
-        mutationFn: async () => {}, // TODO: add when api is ready
+        mutationFn: signinWithEmailAndPasswordAPI,
     });
 
-    const onSubmit = form.handleSubmit(() => {
-        passwordLoginMutation.mutate();
+    const onSubmit = form.handleSubmit(values => {
+        if (!values.itIsMe) {
+            return;
+        }
+
+        passwordLoginMutation.mutate(
+            {
+                email: email as string,
+                password: values.password,
+            },
+            {
+                onSuccess() {
+                    // TODO: add api call to get jwt token from backend service and then redirect user
+                    toast.success("Successful login");
+                    router.replace(PATHS.Home);
+                },
+                onError(error) {
+                    let message = "An unknown error occurred";
+                    if (error instanceof FirebaseError) {
+                        switch (error.code) {
+                            case "auth/invalid-credential":
+                                message = "Invalid email or password";
+                                break;
+                            default:
+                                message = error.message;
+                        }
+                    }
+
+                    toast.error(message);
+                },
+            },
+        );
     });
 
     const isItMe = form.watch("itIsMe");
