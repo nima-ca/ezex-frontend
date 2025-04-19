@@ -36,10 +36,11 @@ const PasswordForm = () => {
     const pictureName = useSigninStore(state => state.pictureName);
 
     const pictureInfo = useMemo(() => {
-        const pictureInfo = VERIFICATION_IMAGES.find(img =>
+        const info = VERIFICATION_IMAGES.find(img =>
             img.path.endsWith(`/${pictureName}.png`),
         );
-        return pictureInfo ?? null;
+
+        return info ?? null;
     }, []);
 
     useEffect(() => {
@@ -68,13 +69,18 @@ const PasswordForm = () => {
                 password: values.password,
             },
             {
-                onSuccess() {
-                    // TODO: add api call to get jwt token from backend service and then redirect user
+                async onSuccess(data) {
+                    const idToken = await data.user.getIdToken();
+                    // TODO: remove this console and send token to backend to get the real JWT token in the cookies
+
+                    console.log(idToken);
+
                     toast.success("Successful login");
                     router.replace(PATHS.Home);
                 },
                 onError(error) {
                     let message = "An unknown error occurred";
+
                     if (error instanceof FirebaseError) {
                         switch (error.code) {
                             case "auth/invalid-credential":
