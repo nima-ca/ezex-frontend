@@ -47,7 +47,7 @@ const EmailForm = () => {
             {
                 onSuccess() {
                     toast.success("Confirmation Code Sent Successfully");
-                    router.push(PATHS.SignupOTPPage + `?email=${values.email}`);
+                    router.push(`${PATHS.SignupOTPPage}?email=${values.email}`);
                 },
             },
         );
